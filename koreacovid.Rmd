@@ -73,8 +73,14 @@ When you compare the percentage of men versus women who died from Covid 19, men 
 
 ## Inferential results 
 
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
 
-
+In both the Fisher and Chi-Squared tests, the P value is less than 0.05. Therefore we reject the null hypothesis.
 
 ## Conclusions
 
+The original question was if dying of Covid 19 was independent of a person's sex. Our graphical and numerical data shows that male deaths were about two times higher than women's, and because the P value of the data was less than 0.05, we reject the null hypothesis. So males are more likely than females to die due to Covid 19.
