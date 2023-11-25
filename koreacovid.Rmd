@@ -23,28 +23,53 @@ mutate(across(where(is.character), as.factor))
 
 Some of the data was uncoded for sex - sex must be just male or female
 77 of the data entries were coded sex  as blank, so we omit these.
-state of a patient must be died or alive - we adjust that as well   
-  
+state of a patient must be died or alive - we adjust that as well  
+
+```{r}
+str(kRdata)
+```
+
 # Your Question - Is dying independent of sex?
+The question is, is the dying independent of sex? 
+
+$H_0$: Null hypothesis is there is no relationship between the sex of the individual and their death.
+
+$H_A$: Alternative hypothesis is there is a relationship between an individual's sex and their death.
 
 
+## Method
+The response variable is categorical, and the explanatary variable is also categorical, so we use the cat-cat helper file.
 
 
+## Graphical results - use ggplot commands to do this
 
 
-## Graphical results - use ggplot commands to do this  
+```{r}
+dd2 <- kRdata %>% group_by(result,Sex) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+basicC <- ggplot(dd2,aes(x=Sex,y=count,fill=result))
+basicC + geom_bar(stat="identity",position="dodge")
 
 
+#Now for percentage plot
 
-  
+basicCC <- ggplot(dd2,aes(x=Sex,y=prcnt*100,fill=result)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
 
-
-
+The bar graph shows us that the percentage of men who died from Covid 19 was overwhelmingly higher than that of women.
 
 
   
 ## Numerical results
 
+```{r}
+table1 <- xtabs(~result + Sex, data=kRdata)
+rowPerc(table1)
+colPerc(table1)
+```
+
+When you compare the percentage of men versus women who died from Covid 19, men died twice as much as women. 64% of men died, and only 36% of women died from this virus.
 
 ## Inferential results 
 
